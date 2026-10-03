@@ -189,7 +189,7 @@ class caddy (
   Optional[Stdlib::Absolutepath] $vhost_enable_dir                = undef,
   Enum['personal', 'commercial'] $caddy_license                   = 'personal',
   Enum['on', 'off']              $caddy_telemetry                 = 'off',
-  List[String]                   $caddy_plugins                   = [],
+  Array[String]                  $caddy_plugins                   = [],
   String[1]                      $caddy_features                  = 'http.git,http.filter,http.ipfilter',
   String[1]                      $caddy_architecture              = $facts['os']['architecture'],
   Optional[String[1]]            $caddy_account_id                = undef,
