@@ -7,14 +7,16 @@ class caddy::install::site {
   assert_private()
 
   $bin_file = $caddy::install::bin_file
+  $plugin_params = $caddy::caddy_plugins.map {|$p| "p=${p}" }
 
-  $query_params = {
+  $other_params = {
     os        => 'linux',
     arch      => $caddy::arch,
-    plugins   => $caddy::caddy_features,
     license   => $caddy::caddy_license,
     telemetry => $caddy::caddy_telemetry,
-  }.map |$k, $v| { "${k}=${v}" }.join('&')
+  }.map |$k, $v| { "${k}=${v}" }
+  
+  $query_params = ($other_params + $plugin_params).join('&')
 
   $caddy_source = '/var/cache/caddy-latest'
   $caddy_dl_url    = "https://caddyserver.com/api/download?${query_params}"

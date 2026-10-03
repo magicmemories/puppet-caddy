@@ -6,7 +6,11 @@
 #
 # @example Install customized version of Caddy from the official site
 #   class { 'caddy':
-#     caddy_features => 'http.git,http.filter,http.ipfilter',
+#     caddy_plugins => [
+#       'github.com/greenpau/caddy-git',
+#       'github.com/sjtug/caddy2-filter',
+#       'github.com/deanchou/caddy_ip_filter',
+#     ],
 #   }
 #
 # @example Install specific version of Caddy
@@ -58,8 +62,12 @@
 # @param caddy_telemetry
 #   Whether telemetry data should be collected.
 #
+# @param caddy_plugins
+#   A list of plugins the Caddy binary should include. See the Caddy
+#   download page for plugin specifiers.
+#
 # @param caddy_features
-#   A list of features the Caddy binary should support.
+#   A list of features the Caddy binary should support. **Deprecated**
 #
 # @param caddy_architecture
 #    A temporary variable, required for the download URL.
@@ -181,6 +189,7 @@ class caddy (
   Optional[Stdlib::Absolutepath] $vhost_enable_dir                = undef,
   Enum['personal', 'commercial'] $caddy_license                   = 'personal',
   Enum['on', 'off']              $caddy_telemetry                 = 'off',
+  List[String]                   $caddy_plugins                   = [],
   String[1]                      $caddy_features                  = 'http.git,http.filter,http.ipfilter',
   String[1]                      $caddy_architecture              = $facts['os']['architecture'],
   Optional[String[1]]            $caddy_account_id                = undef,
