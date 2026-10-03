@@ -7,7 +7,7 @@ class caddy::install::site {
   assert_private()
 
   $bin_file = $caddy::install::bin_file
-  $plugin_params = $caddy::caddy_plugins.map {|$p| "p=${p}" }
+  $plugin_params = $caddy::caddy_plugins.map |$p| { "p=${p}" }
 
   $other_params = {
     os        => 'linux',
